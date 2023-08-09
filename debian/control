@@ -16,7 +16,7 @@ Build-Depends:
  libelf-dev,
  bc,
  pkg-config,
- nvidia-kernel-dkms
+ nvidia-kernel-dkms | nvidia-dkms-525
 Standards-Version: 4.5.1
 
 Package: golem-nvidia-base

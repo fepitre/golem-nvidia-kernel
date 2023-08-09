@@ -5,7 +5,19 @@ include /usr/share/dpkg/pkg-info.mk
 NVIDIA_DIRECTORIES := $(shell find /usr/src/ -maxdepth 1 -type d -name 'nvidia-*')
 NVIDIA_LATEST_VERSION := $(shell echo $(NVIDIA_DIRECTORIES) | tr ' ' '\n' | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+' | sort -rV | head -n 1)
 
-DEB_BUILD_OPTIONS ?= -j1
+ifeq ($(shell lsb_release -si),Ubuntu)
+NVIDIA_MODULE=nvidia
+else
+NVIDIA_MODULE=nvidia-current
+endif
+
+OUTPUT_DIR := $(CURDIR)/debian/tmp
+
+ifneq (,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+    NUMJOBS = $(patsubst parallel=%,%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
+else
+	NUMJOBS = 1
+endif
 
 %:
 	dh $@
@@ -14,27 +26,30 @@ override_dh_auto_clean:
 	true
 
 override_dh_auto_build:
+	mkdir $(OUTPUT_DIR)
 	cp $(CURDIR)/debian/config-virt $(CURDIR)/.config
 	make olddefconfig
-	make $(DEB_BUILD_OPTIONS)
+	make -j$(NUMJOBS)
 
 override_dh_auto_install:
 	# Install Linux and its modules
-	mkdir -p $(CURDIR)/debian/tmp/usr/lib/yagna/boot
-	make INSTALL_PATH=$(CURDIR)/debian/tmp/usr/lib/yagna/boot INSTALL_MOD_PATH=$(CURDIR)/debian/tmp/usr/lib/yagna/ install modules_install
+	mkdir -p $(OUTPUT_DIR)/usr/lib/yagna/boot
+	make INSTALL_PATH=$(OUTPUT_DIR)/usr/lib/yagna/boot INSTALL_MOD_PATH=$(OUTPUT_DIR)/usr/lib/yagna/ install modules_install
 
 	# Build NVIDIA modules
-	mkdir -p $(CURDIR)/debian/tmp/dkms
-	SYSSRC=$(CURDIR) /sbin/dkms build -m nvidia-current -v $(NVIDIA_LATEST_VERSION) -k $(DEB_VERSION_UPSTREAM) \
-		--kernelsourcedir $(CURDIR)/debian/tmp/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/build \
-		--dkmstree $(CURDIR)/debian/tmp/dkms
+	mkdir -p $(OUTPUT_DIR)/dkms
+	SYSSRC=$(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/build /sbin/dkms build -m $(NVIDIA_MODULE) -v $(NVIDIA_LATEST_VERSION) -k $(DEB_VERSION_UPSTREAM) \
+		--no-clean-kernel \
+		--no-prepare-kernel \
+		--kernelsourcedir $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/build \
+		--dkmstree $(OUTPUT_DIR)/dkms
 
 	# Put NVIDIA modules into the modules tree
-	mkdir -p $(CURDIR)/debian/tmp/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/updates/dkms
-	mv $(CURDIR)/debian/tmp/dkms/nvidia-current/$(NVIDIA_LATEST_VERSION)/$(DEB_VERSION_UPSTREAM)/x86_64/module/*.ko \
-		$(CURDIR)/debian/tmp/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/updates/dkms
+	mkdir -p $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/updates/dkms
+	mv $(OUTPUT_DIR)/dkms/$(NVIDIA_MODULE)/$(NVIDIA_LATEST_VERSION)/$(DEB_VERSION_UPSTREAM)/x86_64/module/*.ko \
+		$(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/updates/dkms
 
 	# Cleanup
-	rm -rf $(CURDIR)/debian/tmp/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/source \
-		$(CURDIR)/debian/tmp/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/build \
-		$(CURDIR)/debian/tmp/dkms
+	rm -rf $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/source \
+		$(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/build \
+		$(OUTPUT_DIR)/dkms
