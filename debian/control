@@ -1,0 +1,26 @@
+Source: golem-nvidia-base
+Section: misc
+Priority: optional
+Maintainer: Frédéric Pierret <frederic@invisiblethingslab.com>
+Build-Depends:
+ debhelper-compat (= 12),
+ python3,
+ quilt,
+ cpio,
+ xz-utils,
+ kmod,
+ bison,
+ flex,
+ openssl,
+ libssl-dev,
+ libelf-dev,
+ bc,
+ pkg-config,
+ nvidia-kernel-dkms
+Standards-Version: 4.5.1
+
+Package: golem-nvidia-base
+Architecture: amd64
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Golem applications using Nvidia GPU.
+ This package provides the base components for running Golem applications on systems with Nvidia GPU support.

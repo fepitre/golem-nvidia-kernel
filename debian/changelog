@@ -1,0 +1,5 @@
+golem-nvidia-base (5.10.188-1) unstable; urgency=medium
+
+  * Initial release.
+
+ -- Frédéric Pierret <frederic@invisiblethingslab.com>  Mon, 07 Aug 2023 10:06:06 +0200
