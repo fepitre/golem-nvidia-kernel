@@ -1,4 +1,4 @@
-golem-nvidia-base (5.10.188-1) unstable; urgency=medium
+golem-nvidia-base (5.10.188-1) jammy; urgency=medium
 
   * Initial release.
 
