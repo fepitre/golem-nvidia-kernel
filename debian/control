@@ -1,4 +1,4 @@
-Source: golem-nvidia-base
+Source: golem-nvidia-kernel
 Section: misc
 Priority: optional
 Maintainer: Frédéric Pierret <frederic@invisiblethingslab.com>
@@ -19,8 +19,8 @@ Build-Depends:
  nvidia-kernel-dkms | nvidia-dkms-525
 Standards-Version: 4.5.1
 
-Package: golem-nvidia-base
+Package: golem-nvidia-kernel
 Architecture: amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Golem applications using Nvidia GPU.
- This package provides the base components for running Golem applications on systems with Nvidia GPU support.
+ This package provides the kernel components for running Golem applications on systems with Nvidia GPU support.
