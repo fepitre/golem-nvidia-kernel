@@ -1,0 +1,64 @@
+name: Build Debian/Ubuntu Package
+
+on:
+  workflow_dispatch:
+
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set env
+      run: echo "VERSION=$(dpkg-parsechangelog --show-field Version)" >> "$GITHUB_ENV"
+
+    - name: Install build dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y pbuilder
+
+    - name: Download Linux Kernel
+      run: |
+        wget -O ../"golem-nvidia-kernel_${VERSION%-*}.orig.tar.xz" "https://cdn.kernel.org/pub/linux/kernel/v${VERSION:0:1}.x/linux-${VERSION%-*}.tar.xz"
+
+    - name: Create package
+      run: |
+        rm -rf .git .github
+        tar --strip-components=1 -xf ../"golem-nvidia-kernel_${VERSION%-*}.orig.tar.xz"
+        dpkg-source -b .
+        sudo pbuilder create --distribution jammy --othermirror 'deb http://fr.archive.ubuntu.com/ubuntu jammy-updates main universe multiverse restricted|deb http://fr.archive.ubuntu.com/ubuntu jammy-security main universe multiverse restricted'
+        sudo pbuilder build \
+          --distribution jammy \
+          --othermirror 'deb http://fr.archive.ubuntu.com/ubuntu jammy-updates main universe multiverse restricted|deb http://fr.archive.ubuntu.com/ubuntu jammy-security main universe multiverse restricted' \
+          ../"golem-nvidia-kernel_${VERSION}.dsc"
+
+#    - name: Collect artifacts
+#      uses: actions/upload-artifact@v3
+#      with:
+#        name: Build artifacts
+#        path: /var/cache/pbuilder/result/golem-nvidia-kernel_${{ env.VERSION }}_amd64.deb
+
+    - name: Create release
+      uses: actions/create-release@v1
+      id: create_release
+      with:
+        release_name: v${{ env.VERSION }}
+        tag_name: v${{ env.VERSION }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload Debian/Ubuntu Package
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: /var/cache/pbuilder/result/golem-nvidia-kernel_${{ env.VERSION }}_amd64.deb
+        asset_name: golem-nvidia-kernel_${{ env.VERSION }}_amd64.deb
+        asset_content_type: application/vnd.debian.binary-package
