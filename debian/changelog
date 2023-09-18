@@ -1,3 +1,9 @@
+golem-nvidia-kernel (5.10.188-2) jammy; urgency=medium
+
+  * Use displace into ya-runtime-vm.
+
+ -- Frédéric Pierret <frederic@invisiblethingslab.com>  Mon, 18 Sep 2023 11:32:52 +0200
+
 golem-nvidia-kernel (5.10.188-1) jammy; urgency=medium
 
   * Initial release.
