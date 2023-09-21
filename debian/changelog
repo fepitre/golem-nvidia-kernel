@@ -1,3 +1,9 @@
+golem-nvidia-kernel (5.10.188-3) jammy; urgency=medium
+
+  * Create modules.cpio.gz
+
+ -- Frédéric Pierret <frederic@invisiblethingslab.com>  Thu, 21 Sep 2023 23:18:22 +0200
+
 golem-nvidia-kernel (5.10.188-2) jammy; urgency=medium
 
   * Use displace into ya-runtime-vm.

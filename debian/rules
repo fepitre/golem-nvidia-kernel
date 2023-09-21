@@ -53,7 +53,32 @@ override_dh_auto_install:
 	mkdir -p $(OUTPUT_DIR)/usr/lib/yagna/plugins/ya-runtime-vm/runtime
 	ln -s ../../../boot/vmlinuz-$(DEB_VERSION_UPSTREAM) $(OUTPUT_DIR)/usr/lib/yagna/plugins/ya-runtime-vm/runtime/vmlinuz-virt.nvidia
 
+	# Create modules.cpio.gz
+	mkdir $(OUTPUT_DIR)/modules
+	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/drivers/virtio/virtio.ko $(OUTPUT_DIR)/modules
+	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/drivers/virtio/virtio_ring.ko $(OUTPUT_DIR)/modules
+	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/drivers/virtio/virtio_pci.ko $(OUTPUT_DIR)/modules
+	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/drivers/char/hw_random/rng-core.ko $(OUTPUT_DIR)/modules
+	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/drivers/char/hw_random/virtio-rng.ko $(OUTPUT_DIR)/modules
+	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/drivers/char/virtio_console.ko $(OUTPUT_DIR)/modules
+	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/drivers/block/virtio_blk.ko $(OUTPUT_DIR)/modules
+	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/drivers/net/tun.ko $(OUTPUT_DIR)/modules
+	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/drivers/net/net_failover.ko $(OUTPUT_DIR)/modules
+	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/drivers/net/virtio_net.ko $(OUTPUT_DIR)/modules
+	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/fs/9p/9p.ko $(OUTPUT_DIR)/modules
+	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/fs/squashfs/squashfs.ko $(OUTPUT_DIR)/modules
+	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/fs/overlayfs/overlay.ko $(OUTPUT_DIR)/modules
+	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/fs/fscache/fscache.ko $(OUTPUT_DIR)/modules
+	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/net/9p/9pnet.ko $(OUTPUT_DIR)/modules
+	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/net/9p/9pnet_virtio.ko $(OUTPUT_DIR)/modules
+	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/net/core/failover.ko $(OUTPUT_DIR)/modules
+	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/net/ipv6/ipv6.ko $(OUTPUT_DIR)/modules
+	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/net/packet/af_packet.ko $(OUTPUT_DIR)/modules
+	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/updates/dkms/nvidia*.ko $(OUTPUT_DIR)/modules
+	cd $(OUTPUT_DIR)/modules && find . | cpio --quiet -o -H newc -R 0:0 | gzip -9 > $(OUTPUT_DIR)/usr/lib/yagna/plugins/ya-runtime-vm/runtime/modules.cpio.gz
+
 	# Cleanup
 	rm -rf $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/source \
 		$(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/build \
-		$(OUTPUT_DIR)/dkms
+		$(OUTPUT_DIR)/dkms \
+		$(OUTPUT_DIR)/modules
