@@ -1,3 +1,9 @@
+golem-nvidia-kernel (6.1.55-1) jammy; urgency=medium
+
+  * version 6.1.55-1
+
+ -- Frédéric Pierret <frederic@invisiblethingslab.com>  Sun, 01 Oct 2023 12:44:30 +0200
+
 golem-nvidia-kernel (5.10.188-3) jammy; urgency=medium
 
   * Create modules.cpio.gz
