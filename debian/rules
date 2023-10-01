@@ -49,6 +49,7 @@ override_dh_auto_install:
 	mkdir -p $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/updates/dkms
 	mv $(OUTPUT_DIR)/dkms/$(NVIDIA_MODULE)/$(NVIDIA_LATEST_VERSION)/$(DEB_VERSION_UPSTREAM)/x86_64/module/*.ko \
 		$(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/updates/dkms
+	depmod --basedir=$(OUTPUT_DIR)/usr/lib/yagna -a $(DEB_VERSION_UPSTREAM)
 
 	# Create symlink of built kernel into ya-runtime-vm runtime directory
 	mkdir -p $(OUTPUT_DIR)/usr/lib/yagna/plugins/ya-runtime-vm/runtime
@@ -75,7 +76,13 @@ override_dh_auto_install:
 	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/net/core/failover.ko $(OUTPUT_DIR)/modules
 	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/net/ipv6/ipv6.ko $(OUTPUT_DIR)/modules
 	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/net/packet/af_packet.ko $(OUTPUT_DIR)/modules
-	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/updates/dkms/nvidia*.ko $(OUTPUT_DIR)/modules
+	./debian/copy-modules.sh \
+		"$(OUTPUT_DIR)/usr/lib/yagna" \
+		"$(DEB_VERSION_UPSTREAM)" \
+		"$(OUTPUT_DIR)/modules" \
+		nvidia nvidia-uvm nvidia-drm \
+		| awk '!a[$$0]++' \
+		> $(OUTPUT_DIR)/modules/nvidia-modules.list
 	cd $(OUTPUT_DIR)/modules && find . | cpio --quiet -o -H newc -R 0:0 | gzip -9 > $(OUTPUT_DIR)/usr/lib/yagna/plugins/ya-runtime-vm/runtime/modules.cpio.gz
 
 	# Cleanup
