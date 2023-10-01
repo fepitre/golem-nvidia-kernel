@@ -3,6 +3,11 @@ name: Build Ubuntu Package
 on:
   workflow_dispatch:
 
+  pull_request:
+    branches:
+      - main
+      - devel
+
 jobs:
   build:
     runs-on: ubuntu-latest
