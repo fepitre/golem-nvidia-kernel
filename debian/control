@@ -23,6 +23,6 @@ Standards-Version: 4.5.1
 Package: golem-nvidia-kernel
 Architecture: amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}, ya-runtime-vm
-X-Nvidia-Built-Using: ${nvidia:Version}
+XB-Nvidia-Built-Using: ${nvidia:Version}
 Description: Golem applications using Nvidia GPU.
  This package provides the kernel components for running Golem applications on systems with Nvidia GPU support.
