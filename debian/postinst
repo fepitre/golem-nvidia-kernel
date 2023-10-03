@@ -1,0 +1,38 @@
+#!/bin/bash
+set -e
+
+case "$1" in
+    configure|triggered|abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+#DEBHELPER#
+
+case "$1" in
+    configure|triggered)
+        tmpdir="$(mktemp -d /tmp/ya_runtime_vm.XXXX)"
+        cd "$tmpdir"
+        mkdir initramfs
+
+        # Extract anc copy 'init' from ya-runtime-vm
+        zcat /usr/lib/yagna/plugins/ya-runtime-vm/runtime/initramfs.cpio.gz.nvidia-orig | cpio -id init
+        cp init initramfs/
+
+        # Create initramfs from kernel modules and 'init'
+        cd initramfs
+        zcat /usr/lib/yagna/plugins/ya-runtime-vm/runtime/initramfs.cpio.gz.nvidia | cpio -idmv
+        find . | cpio --quiet -o -H newc -R 0:0 | gzip -9 > /usr/lib/yagna/plugins/ya-runtime-vm/runtime/initramfs.cpio.gz.nvidia
+
+        rm -rf "$tmpdir"
+    ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+esac
+
+exit 0
