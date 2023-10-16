@@ -1,3 +1,22 @@
+golem-nvidia-kernel (6.1.58-1) jammy; urgency=medium
+
+  [ Frédéric Pierret (fepitre) ]
+  * Define X-Nvidia-Built-Using
+  * Fix substvar for nvidia
+  * Trigger build workflow on PR
+
+  [ Marek Marczykowski-Górecki ]
+  * Include nvidia*.ko dependencies in initramfs.cpio.gz too
+
+  [ Frédéric Pierret (fepitre) ]
+  * Fix duplicated entries in release.yml
+  * Recreate initramfs and add files squashfs
+
+  [ Marek Marczykowski-Górecki ]
+  * Add modules necessary in 6.1.x kernel to initramfs
+
+ -- Frédéric Pierret <frederic@invisiblethingslab.com>  Mon, 16 Oct 2023 09:11:01 +0200
+
 golem-nvidia-kernel (6.1.55-1) jammy; urgency=medium
 
   * version 6.1.55-1
