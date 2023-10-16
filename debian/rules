@@ -59,6 +59,8 @@ override_dh_auto_install:
 	mkdir $(OUTPUT_DIR)/initramfs
 	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/drivers/virtio/virtio.ko $(OUTPUT_DIR)/initramfs
 	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/drivers/virtio/virtio_ring.ko $(OUTPUT_DIR)/initramfs
+	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/drivers/virtio/virtio_pci_modern_dev.ko $(OUTPUT_DIR)/initramfs
+	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/drivers/virtio/virtio_pci_legacy_dev.ko $(OUTPUT_DIR)/initramfs
 	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/drivers/virtio/virtio_pci.ko $(OUTPUT_DIR)/initramfs
 	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/drivers/char/hw_random/rng-core.ko $(OUTPUT_DIR)/initramfs
 	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/drivers/char/hw_random/virtio-rng.ko $(OUTPUT_DIR)/initramfs
@@ -70,6 +72,7 @@ override_dh_auto_install:
 	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/fs/9p/9p.ko $(OUTPUT_DIR)/initramfs
 	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/fs/squashfs/squashfs.ko $(OUTPUT_DIR)/initramfs
 	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/fs/overlayfs/overlay.ko $(OUTPUT_DIR)/initramfs
+	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/fs/netfs/netfs.ko $(OUTPUT_DIR)/initramfs
 	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/fs/fscache/fscache.ko $(OUTPUT_DIR)/initramfs
 	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/net/9p/9pnet.ko $(OUTPUT_DIR)/initramfs
 	cp $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/kernel/net/9p/9pnet_virtio.ko $(OUTPUT_DIR)/initramfs
