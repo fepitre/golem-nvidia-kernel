@@ -20,13 +20,13 @@ case "$1" in
         mkdir initramfs
 
         # Extract anc copy 'init' from ya-runtime-vm
-        zcat /usr/lib/yagna/plugins/ya-runtime-vm/runtime/initramfs.cpio.gz.nvidia-orig | cpio -id init
+        zcat /usr/lib/yagna/plugins/ya-runtime-vm/runtime/initramfs.cpio.gz | cpio -id init
         cp init initramfs/
 
         # Create initramfs from kernel modules and 'init'
         cd initramfs
-        zcat /usr/lib/yagna/plugins/ya-runtime-vm/runtime/initramfs.cpio.gz.nvidia | cpio -idmv
-        find . | cpio --quiet -o -H newc -R 0:0 | gzip -9 > /usr/lib/yagna/plugins/ya-runtime-vm/runtime/initramfs.cpio.gz.nvidia
+        zcat /usr/lib/yagna/plugins/ya-runtime-vm-nvidia/runtime/initramfs.cpio.gz | cpio -idmv
+        find . | cpio --quiet -o -H newc -R 0:0 | gzip -9 > /usr/lib/yagna/plugins/ya-runtime-vm/runtime/initramfs.cpio.gz
 
         rm -rf "$tmpdir"
     ;;

@@ -52,8 +52,8 @@ override_dh_auto_install:
 	depmod --basedir=$(OUTPUT_DIR)/usr/lib/yagna -a $(DEB_VERSION_UPSTREAM)
 
 	# Create symlink of built kernel into ya-runtime-vm runtime directory
-	mkdir -p $(OUTPUT_DIR)/usr/lib/yagna/plugins/ya-runtime-vm/runtime
-	ln -s ../../../boot/vmlinuz-$(DEB_VERSION_UPSTREAM) $(OUTPUT_DIR)/usr/lib/yagna/plugins/ya-runtime-vm/runtime/vmlinuz-virt.nvidia
+	mkdir -p $(OUTPUT_DIR)/usr/lib/yagna/plugins/ya-runtime-vm-nvidia/runtime
+	ln -s ../../../boot/vmlinuz-$(DEB_VERSION_UPSTREAM) $(OUTPUT_DIR)/usr/lib/yagna/plugins/ya-runtime-vm-nvidia/runtime/vmlinuz-virt
 
 	# Create initramfs.cpio.gz
 	mkdir $(OUTPUT_DIR)/initramfs
@@ -86,12 +86,12 @@ override_dh_auto_install:
 		nvidia nvidia-uvm nvidia-drm \
 		| awk '!a[$$0]++' \
 		> $(OUTPUT_DIR)/initramfs/nvidia-modules.list
-	cd $(OUTPUT_DIR)/initramfs && find . | cpio --quiet -o -H newc -R 0:0 | gzip -9 > $(OUTPUT_DIR)/usr/lib/yagna/plugins/ya-runtime-vm/runtime/initramfs.cpio.gz.nvidia
+	cd $(OUTPUT_DIR)/initramfs && find . | cpio --quiet -o -H newc -R 0:0 | gzip -9 > $(OUTPUT_DIR)/usr/lib/yagna/plugins/ya-runtime-vm-nvidia/runtime/initramfs.cpio.gz
 
 	# Create squashfs with NVIDIA package files
 	mkdir $(OUTPUT_DIR)/squashfs
 	$(CURDIR)/debian/create-nvidia-files-squashfs.sh $(OUTPUT_DIR)/squashfs
-	mv $(OUTPUT_DIR)/nvidia-files.squashfs $(OUTPUT_DIR)/usr/lib/yagna/plugins/ya-runtime-vm/runtime/
+	mv $(OUTPUT_DIR)/nvidia-files.squashfs $(OUTPUT_DIR)/usr/lib/yagna/plugins/ya-runtime-vm-nvidia/runtime/
 
 	# Cleanup
 	rm -rf $(OUTPUT_DIR)/usr/lib/yagna/lib/modules/$(DEB_VERSION_UPSTREAM)/source \
