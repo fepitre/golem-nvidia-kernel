@@ -26,7 +26,7 @@ case "$1" in
         # Create initramfs from kernel modules and 'init'
         cd initramfs
         zcat /usr/lib/yagna/plugins/ya-runtime-vm-nvidia/runtime/initramfs.cpio.gz | cpio -idmv
-        find . | cpio --quiet -o -H newc -R 0:0 | gzip -9 > /usr/lib/yagna/plugins/ya-runtime-vm/runtime/initramfs.cpio.gz
+        find . | cpio --quiet -o -H newc -R 0:0 | gzip -9 > /usr/lib/yagna/plugins/ya-runtime-vm-nvidia/runtime/initramfs.cpio.gz
 
         rm -rf "$tmpdir"
     ;;
