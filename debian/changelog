@@ -1,3 +1,10 @@
+golem-nvidia-kernel (6.1.58-2) jammy; urgency=medium
+
+  [ Marek Marczykowski-Górecki ]
+  * Do not use displace anymore, use separate ya-runtime-vm-nvidia dir
+
+ -- Frédéric Pierret <frederic@invisiblethingslab.com>  Wed, 18 Oct 2023 14:30:50 +0200
+
 golem-nvidia-kernel (6.1.58-1) jammy; urgency=medium
 
   [ Frédéric Pierret (fepitre) ]
