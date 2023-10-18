@@ -1,3 +1,10 @@
+golem-nvidia-kernel (6.1.58-3) jammy; urgency=medium
+
+  [ Frédéric Pierret (fepitre) ]
+  * Fix updated initramfs
+
+ -- Frédéric Pierret <frederic@invisiblethingslab.com>  Wed, 18 Oct 2023 18:38:46 +0200
+
 golem-nvidia-kernel (6.1.58-2) jammy; urgency=medium
 
   [ Marek Marczykowski-Górecki ]
