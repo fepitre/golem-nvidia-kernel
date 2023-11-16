@@ -1,3 +1,9 @@
+golem-nvidia-kernel (6.1.62-1) jammy; urgency=medium
+
+  * version 6.1.62-1
+
+ -- Frédéric Pierret <frederic@invisiblethingslab.com>  Thu, 16 Nov 2023 14:07:19 +0100
+
 golem-nvidia-kernel (6.1.58-3) jammy; urgency=medium
 
   [ Frédéric Pierret (fepitre) ]
