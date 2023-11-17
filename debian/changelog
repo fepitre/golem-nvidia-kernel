@@ -1,3 +1,12 @@
+golem-nvidia-kernel (6.1.62-2) jammy; urgency=medium
+
+  [ Marek Marczykowski-Górecki ]
+  * Include libnvidia-gl-525-server in nvidi-files too
+  * Do not hide /lib and /(s)bin symlinks
+  * Upload kernel package as a build artifact, not only as a release
+
+ -- Frédéric Pierret <frederic@invisiblethingslab.com>  Fri, 17 Nov 2023 09:06:07 +0100
+
 golem-nvidia-kernel (6.1.62-1) jammy; urgency=medium
 
   * version 6.1.62-1
