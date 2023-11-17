@@ -25,6 +25,7 @@ Build-Depends:
  xserver-xorg-video-nvidia-525,
  nvidia-compute-utils-525,
  libnvidia-compute-525,
+ libnvidia-gl-525-server,
  nvidia-utils-525
 Standards-Version: 4.5.1
 
