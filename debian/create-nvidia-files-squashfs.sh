@@ -14,7 +14,11 @@ mkdir -p "${squashfs_dir}"
 
 # Create package files list
 for pkg in "${packages[@]}"; do
-    while read f; do [ ! -d "$f" ] && echo "$f"; done < <(dpkg -L "$pkg") | sed "/usr\/share\/doc/d;/usr\/share\/man/d" >> "${squashfs_dir}/files.list"
+    while read f; do [ ! -d "$f" ] && echo "$f"; done < <(dpkg -L "$pkg") | \
+        sed \
+            -e "/usr\/share\/doc/d;/usr\/share\/man/d" \
+            -e "s:^/\(lib\|bin\|sbin\):/usr\0:" \
+            >> "${squashfs_dir}/files.list"
 done
 
 # Copy only files from system to squashfs directory
