@@ -55,3 +55,8 @@ jobs:
           --distribution jammy \
           --othermirror 'deb http://fr.archive.ubuntu.com/ubuntu jammy-updates main universe multiverse restricted|deb http://fr.archive.ubuntu.com/ubuntu jammy-security main universe multiverse restricted' \
           ../"golem-nvidia-kernel_${VERSION}.dsc"
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: golem-nvidia-kernel.deb
+        path: /var/cache/pbuilder/result/golem-nvidia-kernel_*amd64.deb
