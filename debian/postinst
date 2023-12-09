@@ -22,6 +22,7 @@ case "$1" in
         # Extract anc copy 'init' from ya-runtime-vm
         zcat /usr/lib/yagna/plugins/ya-runtime-vm/runtime/initramfs.cpio.gz | cpio -id init
         cp init initramfs/
+        mkdir initramfs/newroot
 
         # Create initramfs from kernel modules and 'init'
         cd initramfs
