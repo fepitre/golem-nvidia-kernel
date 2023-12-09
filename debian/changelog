@@ -1,3 +1,10 @@
+golem-nvidia-kernel (6.1.66-1) jammy; urgency=medium
+
+  * Update to 6.1.66
+  * Include 'newroot' dir
+
+ -- Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>  Sat, 09 Dec 2023 18:22:45 +0100
+
 golem-nvidia-kernel (6.1.62-2) jammy; urgency=medium
 
   [ Marek Marczykowski-Górecki ]
