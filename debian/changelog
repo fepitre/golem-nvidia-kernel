@@ -1,3 +1,10 @@
+golem-nvidia-kernel (6.1.97-1) jammy; urgency=medium
+
+  * Update to 6.1.97
+  * Set CONFIG_VGA_ARB=y and CONFIG_VGA_ARB_MAX_GPUS=16
+
+ -- Frédéric Pierret <frederic@invisiblethingslab.com>  Wed, 10 Jul 2024 09:14:47 +0200
+
 golem-nvidia-kernel (6.1.66-1) jammy; urgency=medium
 
   * Update to 6.1.66
@@ -8,7 +15,7 @@ golem-nvidia-kernel (6.1.66-1) jammy; urgency=medium
 golem-nvidia-kernel (6.1.62-2) jammy; urgency=medium
 
   [ Marek Marczykowski-Górecki ]
-  * Include libnvidia-gl-525-server in nvidi-files too
+  * Include libnvidia-gl-535-server in nvidi-files too
   * Do not hide /lib and /(s)bin symlinks
   * Upload kernel package as a build artifact, not only as a release
 

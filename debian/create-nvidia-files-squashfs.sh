@@ -3,7 +3,7 @@
 set -exu -o pipefail
 
 squashfs_dir="$1"
-packages_list="${2:-nvidia-kernel-common-525 libnvidia-cfg1-525 xserver-xorg-video-nvidia-525 nvidia-compute-utils-525 libnvidia-compute-525 libnvidia-gl-525-server libnvidia-common-525-server nvidia-utils-525}"
+packages_list="${2:-nvidia-kernel-common-535 libnvidia-cfg1-535 xserver-xorg-video-nvidia-535 nvidia-compute-utils-535 libnvidia-compute-535 libnvidia-gl-535-server libnvidia-common-535-server nvidia-utils-535}"
 
 # Make a packages array
 read -r -a packages <<< "$packages_list"

@@ -19,14 +19,14 @@ Build-Depends:
  pkg-config,
  rsync,
  squashfs-tools,
- nvidia-dkms-525,
- nvidia-kernel-common-525,
- libnvidia-cfg1-525,
- xserver-xorg-video-nvidia-525,
- nvidia-compute-utils-525,
- libnvidia-compute-525,
- libnvidia-gl-525-server,
- nvidia-utils-525
+ nvidia-dkms-535,
+ nvidia-kernel-common-535,
+ libnvidia-cfg1-535,
+ xserver-xorg-video-nvidia-535,
+ nvidia-compute-utils-535,
+ libnvidia-compute-535,
+ libnvidia-gl-535-server,
+ nvidia-utils-535
 Standards-Version: 4.5.1
 
 Package: golem-nvidia-kernel
