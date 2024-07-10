@@ -1,3 +1,10 @@
+golem-nvidia-kernel (6.1.97-1) jammy; urgency=medium
+
+  * Update to 6.1.97
+  * Set CONFIG_VGA_ARB=y and CONFIG_VGA_ARB_MAX_GPUS=16
+
+ -- Frédéric Pierret <frederic@invisiblethingslab.com>  Wed, 10 Jul 2024 09:14:47 +0200
+
 golem-nvidia-kernel (6.1.66-1) jammy; urgency=medium
 
   * Update to 6.1.66
